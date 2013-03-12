@@ -1,9 +1,7 @@
 /**
- * The following features are still outstanding: popup delay, animation as a
- * function, placement as a function, inside, support for more triggers than
- * just mouse enter/leave, html popovers, and selector delegatation.
+ * kitty popover is a copy of ui.bootstrap.popover to help to help me confirm that kitty is following the ui.bootstrap pattern.
  */
-angular.module( 'ui.bootstrap.popover', [] )
+angular.module( 'kitty.popover', [] )
 .directive( 'popoverPopup', function () {
   return {
     restrict: 'EA',
