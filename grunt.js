@@ -12,11 +12,11 @@ module.exports = function(grunt) {
     tplModules: [], 
     pkg:'<json:package.json>',
     dist: 'dist',
-    filename: 'ui-bootstrap',
+    filename: 'kitty',
     meta: {
-      modules: 'angular.module("ui.bootstrap", [<%= srcModules %>]);',
-      tplmodules: 'angular.module("ui.bootstrap.tpls", [<%= tplModules %>]);',
-      all: 'angular.module("ui.bootstrap", ["ui.bootstrap.tpls", <%= srcModules %>]);'
+      modules: 'angular.module("kitty", [<%= srcModules %>]);',
+      tplmodules: 'angular.module("kitty.tpls", [<%= tplModules %>]);',
+      all: 'angular.module("kitty", ["kitty.tpls", <%= srcModules %>]);'
     },
     lint: {
       files: ['grunt.js','src/**/*.js']
@@ -56,9 +56,42 @@ module.exports = function(grunt) {
         noarg: true,
         sub: true,
         boss: true,
-        eqnull: true
+        eqnull: true,
+        expr: true,
+        lastsemic: true,
+        asi: true
       },
       globals: {}
+    },
+    // CoffeeScript linting rules.
+    coffeeLint: {
+      scripts: {
+        files: ['./src/scripts/**/*.coffee', './test/scripts/**/*.coffee'],
+        // Use one tab for indentation.
+        indentation: {
+          value: 1,
+          level: 'error'
+        },
+        // No maximum line length.
+        max_line_length: {
+          level: 'ignore'
+        },
+        // Using tabs should not result in an error.
+        no_tabs: {
+          level: 'ignore'
+        }
+      }
+    },
+    // Compile CoffeeScript (.coffee) files to JavaScript (.js).
+    coffee: {
+      scripts: {
+        files: {
+          './src/': './src/**/*.coffee'
+        },
+        // Don't include a surrounding Immediately-Invoked Function Expression (IIFE) in the compiled output.
+        // For more information on IIFEs, please visit http://benalman.com/news/2010/11/immediately-invoked-function-expression/
+        bare: true
+      }
     }
   });
 
@@ -69,7 +102,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', 'before-test test after-test');
 
-  //Common ui.bootstrap module containing all modules for src and templates
+  //Common kitty module containing all modules for src and templates
   //findModule: Adds a given module to config
   function findModule(name) {
     function enquote(str) {
@@ -82,7 +115,7 @@ module.exports = function(grunt) {
       tplModules.push(enquote(file));
     });
     grunt.file.expand('src/' + name + '/*.js').forEach(function(file) {
-      srcModules.push(enquote('ui.bootstrap.' + name));
+      srcModules.push(enquote('kitty.' + name));
     });
 
     grunt.config('tplModules', tplModules);
@@ -106,8 +139,8 @@ module.exports = function(grunt) {
       var depArrayEnd = contents.indexOf(']', depArrayStart);
       var dependencies = contents.substring(depArrayStart + 1, depArrayEnd);
       dependencies.split(',').forEach(function(dep) {
-        if (dep.indexOf('ui.bootstrap.') > -1) {
-          var depName = dep.trim().replace('ui.bootstrap.','').replace(/['"]/g,'');
+        if (dep.indexOf('kitty.') > -1) {
+          var depName = dep.trim().replace('kitty.','').replace(/['"]/g,'');
           if (deps.indexOf(depName) < 0) {
             deps.push(depName);
             //Get dependencies for this new dependency
@@ -118,7 +151,7 @@ module.exports = function(grunt) {
     });
     return deps;
   }
-  grunt.registerTask('build', 'Create bootstrap build files', function() {
+  grunt.registerTask('build', 'Create kitty build files', function() {
 
     var srcFiles = [], tplFiles = [];
     if (this.args.length) {

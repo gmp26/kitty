@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="bootstrapDemoApp" id="top">
+<html lang="en" ng-app="KittyDemoApp" id="top">
 <head>
     <meta charset="utf-8">
     <title>Kitty - a DSL for mathematics education interactives</title>
     <meta name="description" content="Kitty DSL for mathematics education interactives <% modules.forEach(function(module) { %><%= module.displayName %>, <% }); %>">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/<%= ngversion %>/angular.min.js"></script>
-    <script src="ui-bootstrap-tpls-<%= version%>.min.js"></script>
+    <script src="kitty-tpls-<%= version%>.min.js"></script>
     <script src="assets/select2.js"></script>
     <script src="assets/ui-select2.js"></script>
     <script src="assets/plunker.js"></script>
@@ -103,10 +103,10 @@
                         }(document, "script", "twitter-wjs");</script>
                     </li>
                     <li>
-                        <!-- Place this tag where you want the +1 button to render. --!>
+                        <-- Place this tag where you want the +1 button to render. --!>
                         <div class="g-plusone" data-size="medium"></div>
 
-                        <!-- Place this tag after the last +1 button tag. --!>
+                        <-- Place this tag after the last +1 button tag. --!>
                         <script type="text/javascript">
                             (function () {
                                 var po = document.createElement('script');
